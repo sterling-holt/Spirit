@@ -5,8 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameplayAbilities/BenderAbilitySystemComponent.h"
+#include "Camera/CameraComponent.h"
 #include "SpiritCharacter.generated.h"
 
+
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS(config=Game)
 class ASpiritCharacter : public ACharacter
@@ -15,12 +19,6 @@ class ASpiritCharacter : public ACharacter
 
 
 
-public:
-	ASpiritCharacter();
-	
-	// Ability System Component
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
-	UBenderAbilitySystemComponent* AbilitySystemComponent;
 
 protected:
 
@@ -41,5 +39,28 @@ protected:
 
 
 	void GrantAbility(TSubclassOf<UGameplayAbility> Ability, int32 Level, int32 InputID);
+
+
+
+
+
+public:
+	ASpiritCharacter();
+
+	// Ability System Component
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
+	UBenderAbilitySystemComponent* AbilitySystemComponent;
+	
+	
+	
+	/** Camera boom positioning the camera behind the character */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* Boom;
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return Boom; }
+
+	/** Follow camera */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* Camera;
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return Camera; }
 };
 
