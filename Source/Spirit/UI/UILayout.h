@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include <UITag.h>
 #include <Widgets/CommonActivatableWidgetContainer.h>
+#include <CommonActivatableWidget.h>
 #include "UILayout.generated.h"
 
 /**
@@ -23,6 +24,16 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void RegisterLayer(FUITag Tag, UCommonActivatableWidgetStack* Stack);
 
-	UFUNCTION(BlueprintCallable, Category = "UI")
-	void PushToLayer();
+
+
+	UCommonActivatableWidgetStack** SelectedLayer;
+
+
+	TMap<FUITag, UCommonActivatableWidgetStack*> Layers;
+
+
+
+public:
+	UCommonActivatableWidgetStack* GetStack(FUITag Tag) const;
+	//	AddStack(FUITag Tag, Stack) const { return Layers.Add(Tag); };
 };

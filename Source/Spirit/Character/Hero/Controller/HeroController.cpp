@@ -4,6 +4,7 @@
 #include "HeroController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include <Spirit/UI/Subsystem/UISubsystem.h>
 //  #include "StarfallHeroCharacter.h"
 
 AHeroController::AHeroController()
@@ -17,19 +18,21 @@ AHeroController::AHeroController()
 void AHeroController::BeginPlay()
 {
     Super::BeginPlay();
-    //  OnControllerReady.Broadcast();
-    //  UE_LOG(LogTemp, Warning, TEXT("Controller available"))
-    //  
-    //      UISubsystem = GetGameInstance()->GetSubsystem<UUserInterfaceSubsystem>();
-    //  if (UISubsystem)
-    //  {
-    //      UIWidget = UISubsystem->Mount();
-    //      //  UIWidget->AddToViewport();
-    //      UE_LOG(LogTemp, Warning, TEXT("UI Widget created and added to viewport"))
-    //  }
-    //  
-    //  //  ----
-    //  
+    OnControllerReady.Broadcast();
+
+    UGameInstance* GameInstance = GetGameInstance();
+    if (GameInstance != nullptr)
+    {
+        // Replace 'YourUserInterfaceSubsystem' with the actual name of your subsystem class
+        // And replace 'GetSubsystem<YourUserInterfaceSubsystem>()' with the correct method to get your subsystem
+        UUISubsystem* UISubsystem = GameInstance->GetSubsystem<UUISubsystem>();
+        if (UISubsystem != nullptr)
+        {
+            UISubsystem->Display(this);
+        }
+    }
+
+
     if (GetLocalPlayer())
     {
         EnhancedInputSubsystem = GetLocalPlayer()->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();

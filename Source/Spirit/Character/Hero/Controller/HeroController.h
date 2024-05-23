@@ -10,9 +10,12 @@
 #include "HeroController.generated.h"
 
 
-/**
- * 
- */
+
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnControllerReady);
+
+
+
 UCLASS()
 class SPIRIT_API AHeroController : public APlayerController
 {
@@ -37,4 +40,7 @@ public:
 	UEnhancedInputComponent* GetEnhancedInputComponent() const { return EnhancedInputComponent; };
 
 
+
+	UPROPERTY(BlueprintAssignable)
+	FOnControllerReady OnControllerReady;
 };

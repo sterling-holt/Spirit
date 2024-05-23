@@ -28,16 +28,16 @@ void UProjectileAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle
     {
         Server_PerformTrace();
 
-        FHitResult HitResult;
-        if (PerformLineTrace(HitResult))
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Fire Blast Activated!"));
-        }
+        //  FHitResult HitResult;
+        //  if (PerformLineTrace(HitResult))
+        //  {
+        //      GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Fire Blast Activated!"));
+        //  }
     }
     EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
 }
 
-
+/*
 bool UProjectileAbility::PerformLineTrace(FHitResult& OutHitResult)
 {
     APlayerController* PC = Cast<APlayerController>(GetOwningActorFromActorInfo()->GetInstigatorController());
@@ -106,11 +106,7 @@ bool UProjectileAbility::PerformLineTrace(FHitResult& OutHitResult)
 
     return bSecondHit;
 }
-/*
 */
-
-
-
 
 
 void UProjectileAbility::Server_PerformTrace_Implementation()
@@ -138,7 +134,7 @@ void UProjectileAbility::Server_PerformTrace_Implementation()
         ECC_Visibility,  // Adjust collision channel as necessary
         QueryParams))
     {
-        //  Multicast_HandleResults(HitResult);
+        Multicast_HandleResults(HitResult);
     }
 }
 
@@ -167,8 +163,8 @@ void UProjectileAbility::Multicast_HandleResults_Implementation(const FHitResult
             FColor::Red,    // Line color
             false,          // Persistent lines
             5.0f,           // Lifetime of line in seconds
-            0,              // Depth priority
-            5.0f            // Line thickness
+            1,              // Depth priority
+            1.5f            // Line thickness
         );
     }
 #endif

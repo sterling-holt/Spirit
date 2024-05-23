@@ -14,7 +14,7 @@
 
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUIReady);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUIReadyDelegate);
 
 
 
@@ -31,25 +31,22 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	TSubclassOf<UCommonUserWidget> LayoutClass;
 
-	UPROPERTY()
-	UCommonUserWidget* LayoutInstance;
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
+	UCommonUserWidget* Layout;
 
 	
 	UPROPERTY(BlueprintAssignable, Category = "UI Event")
-	FOnUIReady OnUIReady;
+	FOnUIReadyDelegate OnUIReady;
+
+
+	FUITag PendingTag;
+	TSubclassOf<UCommonActivatableWidget> PendingWidgetClass;
 
 
 	UFUNCTION(BlueprintCallable)
-	void PushToLayer(FUITag Tag, UCommonActivatableWidgetStack* Stack);
-	void CreateCommonWidget(FUITag Tag, TSubclassOf<UCommonActivatableWidgetStack*> Stack);
+	void PushToLayer(FUITag Tag, TSubclassOf<UCommonActivatableWidget> WidgetClass);
 
-
-
+	UFUNCTION()
+	void HandlePushToLayer();
 	void Display(AHeroController* Controller);
-
-
-	//	AHeroController* PlayerController;
-
-
-
 };
