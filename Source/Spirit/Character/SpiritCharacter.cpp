@@ -49,9 +49,10 @@ ASpiritCharacter::ASpiritCharacter()
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	Boom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	Boom->SetupAttachment(RootComponent);
-	Boom->TargetArmLength = 125.0f; // The camera follows at this distance behind the character	
+	Boom->TargetArmLength = 250.0f; // The camera follows at this distance behind the character	
 	Boom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
-	Boom->SetRelativeLocation(FVector(0.f, 0.f, 128.f));
+	Boom->SetRelativeLocation(FVector(0.f, 65.f, 65.f));
+	//	Boom->SetRelativeRotation(FRotator(-20.0f, 0.0f, 0.0f));
 
 	//	Create a follow camera
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
@@ -59,7 +60,7 @@ ASpiritCharacter::ASpiritCharacter()
 	Camera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 
-
+	CharacterTrajectory = CreateDefaultSubobject<UCharacterTrajectoryComponent>(TEXT("CharacterTrajectory"));
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)

@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameplayAbilities/BenderAbilitySystemComponent.h"
+#include "../../../../../../../../Program Files/Epic Games/UE_5.4/Engine/Plugins/Experimental/Animation/MotionTrajectory/Source/MotionTrajectory/Public/CharacterTrajectoryComponent.h"
 #include "Camera/CameraComponent.h"
 #include "SpiritCharacter.generated.h"
+
 
 
 class USpringArmComponent;
@@ -54,13 +56,20 @@ public:
 	
 	
 	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* Boom;
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return Boom; }
 
 	/** Follow camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* Camera;
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return Camera; }
+
+
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Default")
+	TObjectPtr<UCharacterTrajectoryComponent> CharacterTrajectory;
+	//	TObjectPtr<USpiritTrajectory> CharacterTrajectory;
+
 };
 
