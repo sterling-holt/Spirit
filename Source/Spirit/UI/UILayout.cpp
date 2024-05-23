@@ -23,4 +23,6 @@ UCommonActivatableWidgetStack* UUILayout::GetStack(FUITag Tag) const
 	return (FoundStack != nullptr) ? *FoundStack : nullptr;
 	//	return nullptr;
 
+
+	UE_LOG(LogTemp, Warning, TEXT("testing"))
 }
