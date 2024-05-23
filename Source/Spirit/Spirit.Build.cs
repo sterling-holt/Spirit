@@ -20,7 +20,8 @@ public class Spirit : ModuleRules
 			"GameplayAbilities",
 			"GameplayTags",
 			"GameplayTasks",
-			"Niagara"
+			"Niagara",
+			"MotionTrajectory"
 		});
 
     }
