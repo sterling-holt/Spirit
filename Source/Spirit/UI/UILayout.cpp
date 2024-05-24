@@ -21,8 +21,4 @@ UCommonActivatableWidgetStack* UUILayout::GetStack(FUITag Tag) const
 	UE_LOG(LogTemp, Warning, TEXT("Returning Stack"))
 	UCommonActivatableWidgetStack* const* FoundStack = Layers.Find(Tag);
 	return (FoundStack != nullptr) ? *FoundStack : nullptr;
-	//	return nullptr;
-
-
-	UE_LOG(LogTemp, Warning, TEXT("testing"))
 }
