@@ -94,3 +94,6 @@ void UUISubsystem::HandlePushToLayer()
 		UE_LOG(LogTemp, Error, TEXT("UILayout is null."));
 	}
 }
+
+
+// RemoveWidgetFromLayer()

@@ -9,14 +9,15 @@ public class Spirit : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 
-		PublicDependencyModuleNames.AddRange(new string[] { 
-			"Core", 
+		PublicDependencyModuleNames.AddRange(new string[] {
+            "Json",
+			"JsonUtilities",
+            "Core", 
 			"CoreUObject", 
 			"Engine", 
 			"InputCore", 
 			"UMG",
             "CommonUI",
-            "NakamaUnreal",
             "EnhancedInput",
 			"GameplayAbilities",
 			"GameplayTags",
@@ -25,5 +26,13 @@ public class Spirit : ModuleRules
 			"MotionTrajectory"
 		});
 
+		PrivateDependencyModuleNames.AddRange(new string[]
+		{
+				"NakamaUnreal",
+				"NakamaCore",
+				"GameplayAbilities",
+				"GameplayTags",
+				"GameplayTasks"
+		});
     }
 }

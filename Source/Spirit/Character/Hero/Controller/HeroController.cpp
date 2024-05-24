@@ -5,6 +5,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include <Spirit/UI/Subsystem/UISubsystem.h>
+#include <Spirit/Online/NakamaSubsystem.h>
+#include <Spirit/Character/Hero/HeroCharacter.h>
 //  #include "StarfallHeroCharacter.h"
 
 AHeroController::AHeroController()
@@ -30,6 +32,13 @@ void AHeroController::BeginPlay()
         {
             UISubsystem->Display(this);
         }
+
+
+        UNakamaSubsystem* Nakama = GameInstance->GetSubsystem<UNakamaSubsystem>();
+        if (Nakama)
+        {
+            //  Nakama->AuthenticatePlayer();
+        }
     }
 
 
@@ -39,13 +48,13 @@ void AHeroController::BeginPlay()
         if (EnhancedInputSubsystem) {
             //  if (UIContext != nullptr) { SwitchInputContext(UIContext, 0); }
     
-            //  AStarfallCharacter* StarfallCharacter = Cast<AStarfallCharacter>(GetPawn());
-            //  if (StarfallCharacter)
-            //  {
-            //      UE_LOG(LogTemp, Warning, TEXT("Testing character?"))
-            //          StarfallCharacter->OnPawnPossessed.AddDynamic(this, &AStarfallHeroController::HandlePawnPossessed);
-            //      StarfallCharacter->OnPawnUnPossessed.AddDynamic(this, &AStarfallHeroController::HandlePawnUnPossessed);
-            //  }
+            AHeroCharacter* PlayerPawn = Cast<AHeroCharacter>(GetPawn());
+            if (PlayerPawn)
+            {
+                //  UE_LOG(LogTemp, Warning, TEXT("Testing character?"))
+                PlayerPawn->OnPawnPossessed.AddDynamic(this, &AHeroController::HandlePawnPossessed);
+                PlayerPawn->OnPawnUnPossessed.AddDynamic(this, &AHeroController::HandlePawnUnPossessed);
+            }
         }
         else {
             UE_LOG(LogTemp, Warning, TEXT("Subsystem not found."));
@@ -88,21 +97,25 @@ void AHeroController::SwitchInputContext(UInputMappingContext* NewContext, int32
 
 
 
-/*
 
-void AStarfallHeroController::HandlePawnPossessed()
+
+
+void AHeroController::HandlePawnPossessed()
 {
-    //  UE_LOG(LogTemp, Warning, TEXT("possess from controller???"))
-
-    //  this may be removed, we shouldn't need to do anything after possession? unless we want to do something with nakama!
+    AHeroCharacter * PlayerPawn = Cast<AHeroCharacter>(GetPawn());
+    if (PlayerPawn)
+    {
+        UInputMappingContext* PawnContext = PlayerPawn->GetInputContext();
+        if (PawnContext)
+        {
+            SwitchInputContext(PawnContext, 0);
+        }
+    }
 }
 
-
-void AStarfallHeroController::HandlePawnUnPossessed()
+void AHeroController::HandlePawnUnPossessed()
 {
     UE_LOG(LogTemp, Warning, TEXT("Unpossessed from controller???"))
 
-    //  SwitchInputContext(UIContext, 0);
+    SwitchInputContext(UIContext, 0);
 }
-
-*/

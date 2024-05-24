@@ -11,6 +11,12 @@
 
 
 
+//	POSSESSION	-----
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPawnPossessedDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPawnUnPossessedDelegate);
+
+
+
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -37,6 +43,8 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay();
+	virtual void UnPossessed() override;
+	virtual void PossessedBy(AController* NewController) override;
 
 
 
@@ -53,6 +61,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
 	UBenderAbilitySystemComponent* AbilitySystemComponent;
 	
+
+
+
+
+	FOnPawnPossessedDelegate OnPawnPossessed;
+	FOnPawnUnPossessedDelegate OnPawnUnPossessed;
+
+
+
 	
 	
 	/** Camera boom positioning the camera behind the character */

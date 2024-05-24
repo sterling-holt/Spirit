@@ -34,6 +34,7 @@ protected:
 
 
 public:
+	UFUNCTION(BlueprintCallable)
 	UCommonActivatableWidgetStack* GetStack(FUITag Tag) const;
 	//	AddStack(FUITag Tag, Stack) const { return Layers.Add(Tag); };
 };

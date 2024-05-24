@@ -165,3 +165,43 @@ void ASpiritCharacter::GrantAbility(TSubclassOf<UGameplayAbility> Ability, int32
 
 	UE_LOG(LogTemp, Warning, TEXT("Granted Ability: %s"), *Ability->GetName());
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void ASpiritCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (NewController)
+	{
+		FString ControllerName = NewController->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("Possessed by %s"), *ControllerName)
+			OnPawnPossessed.Broadcast();
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Possessed by unknown controller"));
+	}
+}
+
+
+
+void ASpiritCharacter::UnPossessed()
+{
+	UE_LOG(LogTemp, Display, TEXT("Unpossessed!"));
+
+	OnPawnUnPossessed.Broadcast();
+}

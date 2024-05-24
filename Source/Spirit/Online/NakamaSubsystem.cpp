@@ -20,13 +20,9 @@ void UNakamaSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 
 	UE_LOG(LogTemp, Error, TEXT("NAKAMA SUBSYSTEM GO VROOM"));
 
-	//	NakamaClient = UNakamaClient::CreateDefaultClient(ServerKey, Host, Port, bUseSSL, bEnableDebug);
+	NakamaClient = UNakamaClient::CreateDefaultClient(ServerKey, Host, Port, bUseSSL, bEnableDebug);
+	this->AuthenticatePlayer();
 }
-
-
-
-
-/*
 
 void UNakamaSubsystem::Deinitialize()
 {
@@ -34,46 +30,75 @@ void UNakamaSubsystem::Deinitialize()
 }
 
 
-
-
 void UNakamaSubsystem::AuthenticatePlayer()
 {
+
+	UE_LOG(LogTemp, Warning, TEXT("Nakama Authenticating player"))
+
+
 	//	Authentication Parameters
-	FString Email = TEXT("debug@mail.com");
-	FString Password = TEXT("verysecretpassword");
-	FString Username = TEXT("exo");
-	TMap<FString, FString> Variables;
-
-
-	//	authenticate player w/ platform
-	//	get token
+	//	FString Email = TEXT("debug@mail.com");
+	//	FString Password = TEXT("verysecretpassword");
+	//	FString Username = TEXT("exo");
+	//	TMap<FString, FString> Variables;
 
 
 	PlatformAuthToken = "test";
-
+		
 	if (!PlatformAuthToken.IsEmpty())
 	{
+		//	Typically you would get the system's unique device identifier here.
+		FString DeviceId = TEXT("<DeviceId>");
+		FString Username = TEXT("<Username>");
+		bool bCreate = true;
+		TMap<FString, FString> Vars;
 
+		FOnAuthUpdate AuthenticationSuccessDelegate;
+		AuthenticationSuccessDelegate.AddDynamic(this, &UNakamaSubsystem::HandleAuthSuccess);
 
-		NakamaClient->AuthenticateEmail(
-			Email,
-			Password,
-			Username,
-			true,
-			Variables,
-			AuthenticationSuccessDelegate,
-			AuthenticationErrorDelegate
-		);
+		FOnError AuthenticationErrorDelegate;
+		AuthenticationErrorDelegate.AddDynamic(this, &UNakamaSubsystem::HandleAuthError);
 
-		//	AuthenticationSuccessDelegate.AddDynamic(this, &UNakamaSubsystem::OnAuthenticationSuccess);
-		//	AuthenticationErrorDelegate.AddDynamic(this, &UNakamaSubsystem::OnAuthenticationError);
-
+		NakamaClient->AuthenticateDevice(DeviceId, Username, bCreate, Vars, AuthenticationSuccessDelegate, AuthenticationErrorDelegate);
 	}
 	else {
 		//	Get Platform Auth Token
 		UE_LOG(LogTemp, Display, TEXT("Platform auth token is empty"));
 	}
 }
+
+
+
+
+void UNakamaSubsystem::HandleAuthSuccess(UNakamaSession* Session)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Nakama Auth Success"))
+}
+void UNakamaSubsystem::HandleAuthError(const FNakamaError& Error)
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+
+
 
 
 

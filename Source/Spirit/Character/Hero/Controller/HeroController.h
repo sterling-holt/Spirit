@@ -41,6 +41,30 @@ public:
 
 
 
+	//	----------------
+
+	/* */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Input")
+	UInputMappingContext* UIContext;
+
+	/* */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ContinueAction;
+
+	/* */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* BackAction;
+
+
+
+
+
+
+
+
 	UPROPERTY(BlueprintAssignable)
 	FOnControllerReady OnControllerReady;
+
+	void HandlePawnPossessed();
+	void HandlePawnUnPossessed();
 };

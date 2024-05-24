@@ -94,5 +94,5 @@ public:
 
 
 
-
+	UInputMappingContext* GetInputContext() const { return PawnInputContext; };
 };
