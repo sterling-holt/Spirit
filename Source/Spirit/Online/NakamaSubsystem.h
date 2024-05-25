@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "../../../Plugins/Nakama/Source/NakamaUnreal/Public/NakamaClient.h"
 //	#include "../../../Plugins/Nakama/Source/NakamaUnreal/Public/NakamaUnreal.h"
-//	#include "../../../Plugins/Nakama/Source/NakamaUnreal/Public/NakamaSession.h"
-//	#include "../../../Plugins/Nakama/Source/NakamaUnreal/Public/NakamaRealtimeClient.h"
+#include "../../../Plugins/Nakama/Source/NakamaUnreal/Public/NakamaSession.h"
+#include "../../../Plugins/Nakama/Source/NakamaUnreal/Public/NakamaRealtimeClient.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonSerializer.h"
@@ -55,14 +55,14 @@ protected:
 
 	//	----
 
-	//	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Nakama")
-	//	UNakamaSession* NakamaSession;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Nakama")
+	UNakamaSession* NakamaSession;
 	//	UNakamaSession* GetNakamaSession() const { return Session; };
 
 	//	----
 
-	//	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Nakama")
-	//	UNakamaRealtimeClient* NakamaRtClient;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Nakama")
+	UNakamaRealtimeClient* NakamaRtClient;
 	//	UNakamaRealtimeClient* GetRtClient() const { return RtClient; };
 
 	//	----
@@ -73,44 +73,29 @@ public:
 
 	void AuthenticatePlayer();
 
-	//	UPROPERTY(BlueprintAssignable, Category = "Authentication")
-	//	FOnAuthSuccess OnAuthSuccess;
+	UPROPERTY(BlueprintAssignable, Category = "Authentication")
+	FOnAuthUpdate AuthenticationSuccessDelegate;
 	UFUNCTION()
 	void HandleAuthSuccess(UNakamaSession* Session);
 
-	//	UPROPERTY(BlueprintAssignable, Category = "Authentication")
-	//	FOnError OnAuthError;
+	UPROPERTY(BlueprintAssignable, Category = "Authentication")
+	FOnError AuthenticationErrorDelegate;
 	UFUNCTION()
 	void HandleAuthError(const FNakamaError& Error);
 
 
-	//	Event dispatched when authentication completes
-	//	UPROPERTY(BlueprintAssignable, Category = "Authentication")
-	//	FOnAuthSuccess OnAuthSuccess;
-	//	void HandleAuthSuccess(UNakamaSession* Session);
-	
-	//	UPROPERTY(BlueprintAssignable, Category = "Authentication")
-	//	FOnAuthError OnAuthError;
-	//	void HandleAuthError(const FNakamaError& Error);
-	//	
-
-
-
-	//	UPROPERTY(BlueprintAssignable, Category = "Character")
-	//	FOnRealtimeClientConnected RealtimeClientConnectionSuccessDelegate;
-	//	
-	//	UPROPERTY(BlueprintAssignable, Category = "Character")
-	//	FOnRealtimeClientConnectionError RealtimeClientConnectionErrorDelegate;
-	//	
-	//	
-	//	UFUNCTION(BlueprintCallable)
-	//	void ConnectToRealtimeClient(UNakamaSession* Session);
-
+	UFUNCTION(BlueprintCallable)
+	void ConnectToRealtimeClient(UNakamaSession* Session);
 
 	//	UFUNCTION(BlueprintCallable)
 	//	void OnRealtimeClientConnectSuccess();
-	//
+
+	UPROPERTY(BlueprintAssignable, Category = "Character")
+	FOnRealtimeClientConnected RealtimeClientConnectionSuccessDelegate;
+	
+	UPROPERTY(BlueprintAssignable, Category = "Character")
+	FOnRealtimeClientConnectionError RealtimeClientConnectionErrorDelegate;
+	
 	//	UFUNCTION(BlueprintCallable)
 	//	void OnRealtimeClientConnectError(const FNakamaRtError& ErrorData);
-
 };

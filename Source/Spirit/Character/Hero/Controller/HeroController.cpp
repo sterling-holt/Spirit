@@ -30,7 +30,7 @@ void AHeroController::BeginPlay()
         UUISubsystem* UISubsystem = GameInstance->GetSubsystem<UUISubsystem>();
         if (UISubsystem != nullptr)
         {
-            UISubsystem->Display(this);
+            //  UISubsystem->Display(this);
         }
 
 

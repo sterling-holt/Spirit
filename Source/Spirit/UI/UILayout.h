@@ -27,14 +27,11 @@ protected:
 
 
 	UCommonActivatableWidgetStack** SelectedLayer;
-
-
 	TMap<FUITag, UCommonActivatableWidgetStack*> Layers;
 
 
-
 public:
+
 	UFUNCTION(BlueprintCallable)
 	UCommonActivatableWidgetStack* GetStack(FUITag Tag) const;
-	//	AddStack(FUITag Tag, Stack) const { return Layers.Add(Tag); };
 };

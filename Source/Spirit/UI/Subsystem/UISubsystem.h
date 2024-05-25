@@ -10,6 +10,7 @@
 //	#include <Spirit/Character/Hero/Controller/HeroController.h>
 #include <Widgets/CommonActivatableWidgetContainer.h>
 #include <Spirit/Character/Hero/Controller/HeroController.h>
+#include "../UILayout.h"
 #include "UISubsystem.generated.h"
 
 
@@ -22,19 +23,23 @@ UCLASS()
 class SPIRIT_API UUISubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
-	
+
 public:
 	UUISubsystem();
 
+	void OnPostWorldInitialization(UWorld* World, const UWorld::InitializationValues IVS);
+	void OnPlayerControllerSpawned(AActor* Actor);
+	UFUNCTION()
+	void DisplayUI();
 	void Initialize(FSubsystemCollectionBase& Collection);
 
 	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	TSubclassOf<UCommonUserWidget> LayoutClass;
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
-	UCommonUserWidget* Layout;
+	UUILayout* Layout;
 
-	
+
 	UPROPERTY(BlueprintAssignable, Category = "UI Event")
 	FOnUIReadyDelegate OnUIReady;
 
@@ -48,5 +53,11 @@ public:
 
 	UFUNCTION()
 	void HandlePushToLayer();
-	void Display(AHeroController* Controller);
+	
+
+	//	UFUNCTION(BlueprintCallable)
+	//	void RemoveWidget(UCommonActivatableWidget* Widget);
+
+	void OnPostLoadMap(UWorld* World);
+
 };

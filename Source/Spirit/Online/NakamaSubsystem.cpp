@@ -53,10 +53,9 @@ void UNakamaSubsystem::AuthenticatePlayer()
 		bool bCreate = true;
 		TMap<FString, FString> Vars;
 
-		FOnAuthUpdate AuthenticationSuccessDelegate;
 		AuthenticationSuccessDelegate.AddDynamic(this, &UNakamaSubsystem::HandleAuthSuccess);
 
-		FOnError AuthenticationErrorDelegate;
+		
 		AuthenticationErrorDelegate.AddDynamic(this, &UNakamaSubsystem::HandleAuthError);
 
 		NakamaClient->AuthenticateDevice(DeviceId, Username, bCreate, Vars, AuthenticationSuccessDelegate, AuthenticationErrorDelegate);
@@ -73,34 +72,12 @@ void UNakamaSubsystem::AuthenticatePlayer()
 void UNakamaSubsystem::HandleAuthSuccess(UNakamaSession* Session)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Nakama Auth Success"))
+	//	this->ConnectToRealtimeClient(Session);
 }
 void UNakamaSubsystem::HandleAuthError(const FNakamaError& Error)
 {
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-
-
-
-
 
 void UNakamaSubsystem::ConnectToRealtimeClient(UNakamaSession* Session)
 {
@@ -109,10 +86,11 @@ void UNakamaSubsystem::ConnectToRealtimeClient(UNakamaSession* Session)
 	//	Update our session to the passed thru input
 	NakamaSession = Session;
 
-
 	NakamaRtClient = NakamaClient->SetupRealtimeClient();
 
 	bool bCreateStatus = true;
 	NakamaRtClient->Connect(NakamaSession, bCreateStatus, RealtimeClientConnectionSuccessDelegate, RealtimeClientConnectionErrorDelegate);
+
+	//	RealtimeClientConnectionSuccessDelegate.AddDynamic(this, &UNakamaSubsystem::HandleAuthSuccess);
+	//	RealtimeClientConnectionErrorDelegate.AddDynamic(this, &UNakamaSubsystem::HandleAuthSuccess);
 }
-*/

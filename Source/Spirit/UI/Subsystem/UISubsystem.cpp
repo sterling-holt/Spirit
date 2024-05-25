@@ -2,6 +2,11 @@
 
 
 #include "UISubsystem.h"
+#include "Engine/World.h"  // Include for FWorldDelegates
+#include "Engine/GameInstance.h"
+#include "Kismet/GameplayStatics.h"
+#include "Blueprint/UserWidget.h"
+#include "CommonUserWidget.h"
 #include <Spirit/UI/UILayout.h>
 
 
@@ -18,79 +23,160 @@ UUISubsystem::UUISubsystem()
 	}
 }
 
-
 void UUISubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 
 	UE_LOG(LogTemp, Warning, TEXT("Initializing UI Subsystem"))
+	FWorldDelegates::OnPostWorldInitialization.AddUObject(this, &UUISubsystem::OnPostWorldInitialization);
 }
 
 
 
-void UUISubsystem::Display(AHeroController* Controller)
+void UUISubsystem::OnPostWorldInitialization(UWorld* World, const UWorld::InitializationValues IVS)
 {
-	if (LayoutClass)
+	// Defer initialization until the player controller is available
+	if (World)
 	{
-		//	Layout is set,
-		UE_LOG(LogTemp, Warning, TEXT("Displaying UI!"))
+		World->AddOnActorSpawnedHandler(FOnActorSpawned::FDelegate::CreateUObject(this, &UUISubsystem::OnPlayerControllerSpawned));
+		UE_LOG(LogTemp, Warning, TEXT("Bound to OnActorSpawned event"));
+	}
+}
 
-		Layout = CreateWidget<UUILayout>(Controller, LayoutClass);
-		if (Layout)
+
+
+
+
+
+void UUISubsystem::OnPlayerControllerSpawned(AActor* Actor)
+{
+	APlayerController* PlayerController = Cast<APlayerController>(Actor);
+	if (PlayerController)
+	{
+		AHeroController* HeroController = Cast<AHeroController>(PlayerController);
+		if (HeroController)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Adding UI To Viewport!"));
-			// Only add to viewport if it's not already there
-			if (!Layout->IsInViewport()) { 
-				Layout->AddToViewport(); 
-				OnUIReady.Broadcast();
+			HeroController->OnControllerReady.AddDynamic(this, &UUISubsystem::DisplayUI);
+			UE_LOG(LogTemp, Warning, TEXT("Bound to HeroController's OnUIReady event"));
+
+			// Optionally remove the handler to avoid multiple bindings
+			UWorld* World = GetWorld();
+			if (World)
+			{
+				//	World->RemoveOnActorSpawnedHandler(this);
 			}
-			
 		}
 	}
-	else {
-		//	No layout is set, what do we do?
-		UE_LOG(LogTemp, Warning, TEXT("No UI Layout"))
+}
+
+
+void UUISubsystem::DisplayUI()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Displaying UI!"));
+
+	if (LayoutClass && GetWorld()->IsGameWorld())
+	{
+		AHeroController* Controller = Cast<AHeroController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+		if (Controller)
+		{
+			Layout = Cast<UUILayout>(CreateWidget<UCommonUserWidget>(Controller, LayoutClass));
+			if (Layout)
+			{
+				if (!Layout->IsInViewport())
+				{
+					Layout->AddToViewport();
+					UE_LOG(LogTemp, Warning, TEXT("Layout added to viewport"));
+				}
+				else
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Layout is already in viewport, skipping to next step."));
+				}
+				OnUIReady.Broadcast();
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Layout could not be created"));
+			}
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No player controller found"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Please specify UILayout to render UI framework."));
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 void UUISubsystem::PushToLayer(FUITag Tag, TSubclassOf<UCommonActivatableWidget> WidgetClass)
 {
-	OnUIReady.AddDynamic(this, &UUISubsystem::HandlePushToLayer);
 
 	PendingTag = Tag;
 	PendingWidgetClass = WidgetClass;
 
-	//	UCommonActivatableWidgetStack* Stack = Cast<UUILayout>(Layout)->GetStack(Tag);
-	//	if (Stack)
-	//	{
-	//		UE_LOG(LogTemp, Warning, TEXT("Widget added to layer"))
-	//		Stack->AddWidget(WidgetClass);
-	//	}
-	//	else {
-	//		UE_LOG(LogTemp, Warning, TEXT("Widget not found"))
-	//	}
+
+	UE_LOG(LogTemp, Warning, TEXT("I'd love to push that for you butttttt"))
+
+
+	//	OnUIReady.AddDynamic(this, &UUISubsystem::HandlePushToLayer);
 }
 
 
 void UUISubsystem::HandlePushToLayer()
 {
+	UCommonActivatableWidgetStack* Stack = Layout->GetStack(PendingTag);
+	if (Stack)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Widget added to layer"))
+		Stack->AddWidget(PendingWidgetClass);
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Widget not found"))
+	}
+
+	/*
 	if (Layout)
 	{
-		UCommonActivatableWidgetStack* Stack = Cast<UUILayout>(Layout)->GetStack(PendingTag);
-		if (Stack)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Widget added to layer"));
-			Stack->AddWidget(PendingWidgetClass);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Widget not found"));
-		}
+		UE_LOG(LogTemp, Warning, TEXT("Layout found while trying to push widgets"))
+	//		UCommonActivatableWidgetStack* Stack = Cast<UUILayout>(Layout)->GetStack(PendingTag);
+	//		if (Stack)
+	//		{
+	//			UE_LOG(LogTemp, Warning, TEXT("Widget added to layer"));
+	//	
+	//			UCommonActivatableWidget* WidgetInstance = Stack->AddWidget(PendingWidgetClass);
+	//			//	if (WidgetInstance)
+	//			//	{
+	//			//		WidgetInstance->ActivateWidget();
+	//			//	}
+	//		}
+	//		else
+	//		{
+	//			UE_LOG(LogTemp, Warning, TEXT("Widget not found"));
+	//		}
+	//	}
+	//	else
+	//	{
+	//		UE_LOG(LogTemp, Error, TEXT("UILayout is null."));
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("UILayout is null."));
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("No UI Layout"))
 	}
+	*/
 }
