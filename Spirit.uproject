@@ -46,8 +46,32 @@
 			"Enabled": true
 		},
 		{
-			"Name": "Nakama",
+			"Name": "OnlineSubsystemSteam",
 			"Enabled": true
+		},
+		{
+			"Name": "OnlineSubsystemEOS",
+			"Enabled": true
+		},
+		{
+			"Name": "EOSShared",
+			"Enabled": true
+		},
+		{
+			"Name": "OnlineServicesEOS",
+			"Enabled": true
+		},
+		{
+			"Name": "OnlineServicesEOSGS",
+			"Enabled": true
+		},
+		{
+			"Name": "QuestSubsystem",
+			"Enabled": true
+		},
+		{
+			"Name": "StoryGraphEditor",
+			"Enabled": false
 		}
 	]
 }

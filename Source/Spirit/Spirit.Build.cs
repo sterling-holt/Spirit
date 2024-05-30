@@ -28,11 +28,9 @@ public class Spirit : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
-				"NakamaUnreal",
-				"NakamaCore",
-				"GameplayAbilities",
-				"GameplayTags",
-				"GameplayTasks"
+			"GameplayAbilities",
+			"GameplayTags",
+			"GameplayTasks"
 		});
     }
 }

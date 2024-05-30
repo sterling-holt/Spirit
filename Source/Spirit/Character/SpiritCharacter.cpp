@@ -11,7 +11,6 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
-#include "GameplayAbilities/BenderAbilitySystemComponent.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -19,8 +18,8 @@
 
 ASpiritCharacter::ASpiritCharacter()
 {
-	// Create the Ability System Component and attach it to the character
-	AbilitySystemComponent = CreateDefaultSubobject<UBenderAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	// 	Create the Ability System Component and attach it to the character
+	//	AbilitySystemComponent = CreateDefaultSubobject<UBenderAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 
 
 	// Set size for collision capsule

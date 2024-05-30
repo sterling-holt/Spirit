@@ -14,6 +14,3 @@ class ASpiritGameMode : public AGameModeBase
 public:
 	ASpiritGameMode();
 };
-
-
-

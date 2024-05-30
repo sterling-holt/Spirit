@@ -4,10 +4,8 @@
 
 #include "HeroCharacter.h"
 #include "Controller/HeroController.h"
-#include "Spirit/Character/GameplayAbilities/FireBlastAbility.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include <GameplayAbilitySpec.h>
-#include <Spirit/Character/GameplayAbilities/ProjectileAbility.h>
 
 AHeroCharacter::AHeroCharacter()
 {
@@ -52,7 +50,7 @@ void AHeroCharacter::BeginPlay()
 			//	}
 
 
-			this->GrantAbility(UProjectileAbility::StaticClass(), 1, 0);
+			//	this->GrantAbility(UProjectileAbility::StaticClass(), 1, 0);
 	}
 }
 
@@ -126,11 +124,11 @@ void AHeroCharacter::IA_FireBlast()
 {
 
 	//	UE_LOG(LogTemp, Warning, TEXT("Fire Blast!?"))
-	if (AbilitySystemComponent)
-	{
-		//	UE_LOG(LogTemp, Warning, TEXT("Ability Component found"))
-		AbilitySystemComponent->TryActivateAbilityByClass(UProjectileAbility::StaticClass());
-	}
+	//	if (AbilitySystemComponent)
+	//	{
+	//		//	UE_LOG(LogTemp, Warning, TEXT("Ability Component found"))
+	//		AbilitySystemComponent->TryActivateAbilityByClass(UProjectileAbility::StaticClass());
+	//	}
 }
 
 

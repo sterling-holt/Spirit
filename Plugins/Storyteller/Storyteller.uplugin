@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Storyteller",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Sterling",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "Storyteller",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

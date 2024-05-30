@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "GameplayAbilities/BenderAbilitySystemComponent.h"
 #include "../../../../../../../../Program Files/Epic Games/UE_5.4/Engine/Plugins/Experimental/Animation/MotionTrajectory/Source/MotionTrajectory/Public/CharacterTrajectoryComponent.h"
+#include "AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "SpiritCharacter.generated.h"
 
@@ -59,7 +59,8 @@ public:
 
 	// Ability System Component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
-	UBenderAbilitySystemComponent* AbilitySystemComponent;
+	//	UBenderAbilitySystemComponent* AbilitySystemComponent;
+	UAbilitySystemComponent* AbilitySystemComponent;
 	
 
 

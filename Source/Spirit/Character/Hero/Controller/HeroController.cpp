@@ -4,8 +4,7 @@
 #include "HeroController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
-#include <Spirit/UI/Subsystem/UISubsystem.h>
-#include <Spirit/Online/NakamaSubsystem.h>
+//  #include <Spirit/UI/Subsystem/UISubsystem.h>
 #include <Spirit/Character/Hero/HeroCharacter.h>
 //  #include "StarfallHeroCharacter.h"
 
@@ -25,20 +24,13 @@ void AHeroController::BeginPlay()
     UGameInstance* GameInstance = GetGameInstance();
     if (GameInstance != nullptr)
     {
-        // Replace 'YourUserInterfaceSubsystem' with the actual name of your subsystem class
-        // And replace 'GetSubsystem<YourUserInterfaceSubsystem>()' with the correct method to get your subsystem
-        UUISubsystem* UISubsystem = GameInstance->GetSubsystem<UUISubsystem>();
-        if (UISubsystem != nullptr)
-        {
-            //  UISubsystem->Display(this);
-        }
-
-
-        UNakamaSubsystem* Nakama = GameInstance->GetSubsystem<UNakamaSubsystem>();
-        if (Nakama)
-        {
-            //  Nakama->AuthenticatePlayer();
-        }
+        //  Replace 'YourUserInterfaceSubsystem' with the actual name of your subsystem class
+        //  And replace 'GetSubsystem<YourUserInterfaceSubsystem>()' with the correct method to get your subsystem
+        //  UUISubsystem* UISubsystem = GameInstance->GetSubsystem<UUISubsystem>();
+        //  if (UISubsystem != nullptr)
+        //  {
+        //      //  UISubsystem->Display(this);
+        //  }
     }
 
 
