@@ -13,7 +13,6 @@
 #include <AssetRegistry/AssetRegistryModule.h>
 
 
-
 UUserInterfaceSubsystem::UUserInterfaceSubsystem()
 {
 	//	We have established our settings,
@@ -22,7 +21,12 @@ UUserInterfaceSubsystem::UUserInterfaceSubsystem()
 	//	----------------------------
 	// 
 
-
+		// Initialize the tags
+	WatermarkTag = FUITag::AddNativeTag(TEXT("Layer.Watermark"));
+	GameTag = FUITag::AddNativeTag(TEXT("Layer.Game"));
+	HUDTag = FUITag::AddNativeTag(TEXT("Layer.HUD"));
+	MenuTag = FUITag::AddNativeTag(TEXT("Layer.Menu"));
+	ModalTag = FUITag::AddNativeTag(TEXT("Layer.Modal"));
 
 	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
 	TArray<FAssetData> AssetData;
@@ -35,6 +39,7 @@ UUserInterfaceSubsystem::UUserInterfaceSubsystem()
 
 	FString AssetPath = TEXT("/UserInterface/BP_UIFramework.BP_UIFramework_C");
 	UClass* BlueprintClass = StaticLoadClass(UObject::StaticClass(), nullptr, *AssetPath);
+
 	if (BlueprintClass)
 	{
 		FrameworkClass = BlueprintClass;
@@ -59,7 +64,7 @@ void UUserInterfaceSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 
 void UUserInterfaceSubsystem::Test()
 {
-	UE_LOG(LogTemp, Error, TEXT("FUCKING"))
+	UE_LOG(LogTemp, Warning, TEXT("test test test"))
 }
 /*
 void UUserInterfaceSubsystem::OnPostWorldInitialization(UWorld* World, const UWorld::InitializationValues IVS)

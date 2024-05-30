@@ -63,6 +63,12 @@ public:
 
 private:
 
+	// Gameplay tags for each UI layer
+	FUITag WatermarkTag;
+	FUITag GameTag;
+	FUITag HUDTag;
+	FUITag MenuTag;
+	FUITag ModalTag;
 
 
 protected:
